@@ -11,6 +11,30 @@
 					},
 					"name": "source1",
 					"script": "source(output(\n\t\tProp_0 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tlimit: 100) ~> source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "DelimitedText1",
+						"type": "DatasetReference"
+					},
+					"name": "source2",
+					"script": "source(allowSchemaDrift: false,\n\tvalidateSchema: false) ~> source2"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Results",
+						"type": "DatasetReference"
+					},
+					"name": "sink1",
+					"script": "Join1 sink(input(\n\t\tProp_0 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "Join1",
+					"script": "source1, source2 join(Prop_0 == add(),\n\tjoinType:'inner',\n\tpartitionBy('roundRobin', 2),\n\tbroadcast: 'none')~> Join1"
 				}
 			]
 		}
