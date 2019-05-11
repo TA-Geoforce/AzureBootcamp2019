@@ -21,6 +21,26 @@
 					"name": "Movies2",
 					"script": "source(output(\n\t\tmovie as integer,\n\t\ttitle as string,\n\t\tgenres as string,\n\t\tyear as integer,\n\t\tRating as integer,\n\t\t{Rotton Tomato} as short\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> Movies2"
 				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "JoinResult",
+						"type": "DatasetReference"
+					},
+					"name": "sink1",
+					"script": "Select1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "Join1",
+					"script": "Movies1, Movies2 join(Movies1@title == Movies2@title,\n\tjoinType:'inner',\n\tbroadcast: 'both')~> Join1"
+				},
+				{
+					"name": "Select1",
+					"script": "Join1 select(mapColumn(\n\t\tmovieId,\n\t\tmovie,\n\t\ttitle = Movies2@title,\n\t\tgenres = Movies2@genres,\n\t\tyear,\n\t\tRating,\n\t\t{Rotton Tomato}\n\t))~> Select1"
+				}
 			]
 		}
 	}
