@@ -1,0 +1,7 @@
+{
+	"name": "DataManipulationDF",
+	"properties": {
+		"description": "This is a test data flow with movies DB",
+		"type": "MappingDataFlow"
+	}
+}
