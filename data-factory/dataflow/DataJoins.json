@@ -1,0 +1,7 @@
+{
+	"name": "DataJoins",
+	"properties": {
+		"description": "Join two datasets",
+		"type": "MappingDataFlow"
+	}
+}
