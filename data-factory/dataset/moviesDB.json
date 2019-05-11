@@ -5,6 +5,9 @@
 			"referenceName": "AzureBlobStorage2",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "sampledata"
+		},
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
