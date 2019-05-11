@@ -2,6 +2,26 @@
 	"name": "DataJoins",
 	"properties": {
 		"description": "Join two datasets",
-		"type": "MappingDataFlow"
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "MoviesRating",
+						"type": "DatasetReference"
+					},
+					"name": "Movies1",
+					"script": "source(output(\n\t\tmovieId as string,\n\t\ttitle as string,\n\t\tgenres as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> Movies1"
+				},
+				{
+					"dataset": {
+						"referenceName": "MoviesDB",
+						"type": "DatasetReference"
+					},
+					"name": "Movies2",
+					"script": "source(output(\n\t\tmovie as integer,\n\t\ttitle as string,\n\t\tgenres as string,\n\t\tyear as integer,\n\t\tRating as integer,\n\t\t{Rotton Tomato} as short\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> Movies2"
+				}
+			]
+		}
 	}
 }
