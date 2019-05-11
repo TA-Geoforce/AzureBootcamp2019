@@ -1,0 +1,19 @@
+{
+	"name": "ResultsMoviesAggregation",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "datafactoryStorage",
+			"type": "LinkedServiceReference"
+		},
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
