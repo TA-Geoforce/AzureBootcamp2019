@@ -39,7 +39,19 @@
 				},
 				{
 					"name": "Select1",
-					"script": "Join1 select(mapColumn(\n\t\tmovieId,\n\t\tmovie,\n\t\ttitle = Movies2@title,\n\t\tgenres = Movies2@genres,\n\t\tyear,\n\t\tRating,\n\t\t{Rotton Tomato}\n\t))~> Select1"
+					"script": "Join2 select(mapColumn(\n\t\tgenres = AggregateBGernes@genres,\n\t\tAvgRating,\n\t\tmovieId = OriginData@movieId,\n\t\tmovie,\n\t\ttitle = OriginData@title,\n\t\tyear,\n\t\tRating,\n\t\t{Rotton Tomato}\n\t))~> Select1"
+				},
+				{
+					"name": "AggregateBGernes",
+					"script": "Join1 aggregate(groupBy(Movies1@genres),\n\tAvgRating = avg(Rating),\n\t\tmovieId = max(movieId)) ~> AggregateBGernes"
+				},
+				{
+					"name": "OriginData",
+					"script": "Join1 select()~> OriginData"
+				},
+				{
+					"name": "Join2",
+					"script": "AggregateBGernes, OriginData join(AggregateBGernes@movieId == OriginData@movieId,\n\tjoinType:'inner',\n\tbroadcast: 'none')~> Join2"
 				}
 			]
 		}
