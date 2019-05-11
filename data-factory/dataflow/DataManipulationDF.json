@@ -2,6 +2,38 @@
 	"name": "DataManipulationDF",
 	"properties": {
 		"description": "This is a test data flow with movies DB",
-		"type": "MappingDataFlow"
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "MoviesDB",
+						"type": "DatasetReference"
+					},
+					"name": "source1",
+					"script": "source(output(\n\t\tmovie as integer,\n\t\ttitle as string,\n\t\tgenres as string,\n\t\tyear as short,\n\t\tRating as short,\n\t\t{Rotton Tomato} as short\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tlimit: 10) ~> source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ResultsMoviesAggregation",
+						"type": "DatasetReference"
+					},
+					"name": "sink1",
+					"script": "AggregateByYear sink(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "deletebaddata",
+					"script": "source1 alterRow(deleteIf(year < 1900)) ~> deletebaddata"
+				},
+				{
+					"name": "AggregateByYear",
+					"script": "deletebaddata aggregate(groupBy(year),\n\tAverageRate = toDecimal(avg(Rating), 10, 2) ) ~> AggregateByYear"
+				}
+			]
+		}
 	}
 }
