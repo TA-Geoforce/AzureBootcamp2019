@@ -1,5 +1,7 @@
 # Athens Global Azure Bootcamp 2019
 
+![Athens Glovbal Azure Bootcampl 2019](/photos/DSCF2749.jpg)
+
 ## Introduction
 This repository contains all the information that was presented in Athens Global Azure Bootcamp 2019.
 
